@@ -4,34 +4,21 @@
     <form action="{{ route("do-register") }}" method="POST">
         @csrf
         
+        <x-input-field name="name" label="Name">
+            <x-input type="text" name="name" autocomplete="name" />
+        </x-input-field>
 
-        <div>
-            <label>
-                <span>Name</span>
-                <input type="text" name="name" autocomplete="name" value="{{old("name")}}" />
-            </label>
-        </div>
+        <x-input-field name="email" label="Email Address">
+            <x-input type="email" name="email" autocomplete="email" />
+        </x-input-field>
 
-        <div>
-            <label>
-                <span>Email Address</span>
-                <input type="email" name="email" autocomplete="email" value="{{old("email")}}" />
-            </label>
-        </div>
+        <x-input-field name="password" label="Password">
+            <x-input type="password" name="password" autocomplete="new-password" />
+        </x-input-field>
 
-        <div>
-            <label>
-                <span>Password</span>
-                <input type="password" name="password" autocomplete="new-password" />
-            </label>
-        </div>
-
-        <div>
-            <label>
-                <span>Confirm Password</span>
-                <input type="password" name="password_confirmation" autocomplete="new-password" />
-            </label>
-        </div>
+        <x-input-field name="password_confirmation" label="Confirm Password">
+            <x-input type="password" name="password_confirmation" autocomplete="new-password" />
+        </x-input-field>
 
         <button type="submit">Register</button>
     </form>
