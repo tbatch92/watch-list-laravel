@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\MovieListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,8 @@ Route::post("/register", [AuthenticationController::class, "register"])->name("d
 
 Route::middleware("auth")->post("/logout", [AuthenticationController::class, "logout"])->name("logout");
 
-Route::middleware("auth")->get("/", function() {
-    return view("home");
-})->name("home");
+Route::middleware("auth")->group(function() {
+    Route::get("/", [MovieListController::class, "getListsPage"])->name("home");
+    Route::post("/list", [MovieListController::class, "createMovieList"])->name("create-list");
+    Route::get("/list/{slug}", [MovieListController::class, "getListPage"])->name("list");
+});
