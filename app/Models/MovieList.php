@@ -10,6 +10,16 @@ class MovieList extends Model
 {
     use HasFactory;
 
+    function movieListAssociation()
+    {
+        return $this->hasMany(MovieListAssociation::class);
+    }
+
+    function movies()
+    {
+        return $this->hasManyThrough(Movie::class, MovieListAssociation::class);
+    }
+
     function user()
     {
         return $this->belongsTo(User::class);

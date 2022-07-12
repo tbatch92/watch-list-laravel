@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
@@ -9,6 +10,11 @@ use Illuminate\Support\Facades\Http;
 class Movie extends Model
 {
     use HasFactory;
+
+    function movieListAssociation()
+    {
+        return $this->hasMany(MovieListAssociation::class);
+    }
 
     static function getMovieDbDetailsForId($movieDbId)
     {
@@ -25,6 +31,7 @@ class Movie extends Model
                 $movie->name = $details['title'];
                 $movie->runtime = $details['runtime'];
                 $movie->image_url = $details['poster_path'];
+                $movie->release_date = Carbon::create($details["release_date"]);
             }
 
             return $movie;
