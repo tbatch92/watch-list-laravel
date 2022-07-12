@@ -29,7 +29,7 @@ class ListTest extends TestCase
         $this->assertEmpty(MovieList::all());
     }
 
-    public function test_unique_slug_is_created_for_duplication_names()
+    public function test_unique_slug_is_created_for_duplicated_names()
     {
         $user = User::factory()->create();
 

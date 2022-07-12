@@ -16,13 +16,13 @@
         <p>No lists!</p>
     @endif
 
-        <form action="{{route("create-list")}}" method="POST">
-            @csrf
-            <x-input-field name="name" label="List Name">
-                <x-input autocomplete="off" name="name" />
-            </x-input-field>
+    <form action="{{route("create-list")}}" method="POST">
+        @csrf
+        <x-input-field name="name" label="List Name">
+            <x-input autocomplete="off" name="name" />
+        </x-input-field>
 
-            <button type="submit">Create</button>
-        </form>
+        <button type="submit">Create</button>
+    </form>
 
 </x-page>
