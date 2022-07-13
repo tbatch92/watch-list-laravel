@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddMovieToListRequest;
 use App\Http\Requests\CreateMovieListRequest;
+use App\Http\Requests\MarkMovieAsWatchedRequest;
 use App\Models\Movie;
 use App\Models\MovieList;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -45,6 +47,13 @@ class MovieListController extends Controller
         $movie->save();
 
         $movieList->movies()->attach($movie);
+
+        return $movieList;
+    }
+
+    public function markMovieAsWatched(MarkMovieAsWatchedRequest $request, MovieList $movieList, Movie $movie)
+    {
+        $movieList->movies()->updateExistingPivot($movie->id, ["watched_at" => Carbon::now()]);
 
         return $movieList;
     }

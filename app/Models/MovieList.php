@@ -12,7 +12,7 @@ class MovieList extends Model
 
     function movies()
     {
-        return $this->belongsToMany(Movie::class)->withTimestamps();
+        return $this->belongsToMany(Movie::class)->withTimestamps()->withPivot('watched_at');
     }
 
     function user()

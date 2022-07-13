@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth')->group(function() {
     Route::post("/movie-lists/{movieList}/movie", [MovieListController::class, "addMovieToList"])->name("add-movie-to-list");
+    Route::put("/movie-lists/{movieList}/movie/{movie}/watched", [MovieListController::class, "markMovieAsWatched"])->name("mark-movie-as-watched");
 });

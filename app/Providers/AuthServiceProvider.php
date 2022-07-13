@@ -31,5 +31,9 @@ class AuthServiceProvider extends ServiceProvider
             return $movieList->user_id === $user->id;
         });
 
+        Gate::define("mark-as-watched", function (User $user, MovieList $movieList) {
+            return $movieList->user_id === $user->id;
+        });
+
     }
 }

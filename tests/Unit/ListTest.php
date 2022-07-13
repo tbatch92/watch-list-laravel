@@ -70,4 +70,27 @@ class ListTest extends TestCase
 
         $this->assertCount(0, $list->movies);
     }
+
+    public function test_user_can_mark_movie_as_watched_in_list()
+    {
+        $list = MovieList::factory()->create();
+
+        $this->actingAs($list->user)
+            ->postJson(route("add-movie-to-list", ["movieList" => $list->id]), ["movie_db_id" => "1726"])
+            ->assertStatus(200);
+
+        $list->refresh();
+        $movie = $list->movies->first();
+
+        $this->assertNull($movie->pivot->watched_at);
+
+        $this->actingAs($list->user)
+            ->putJson(route("mark-movie-as-watched", ["movieList" => $list->id, "movie" => $movie->id]))
+            ->assertStatus(200);
+
+        $list->refresh();
+        $movie = $list->movies->first();
+
+        $this->assertNotNull($movie->pivot->watched_at);
+    }
 }
