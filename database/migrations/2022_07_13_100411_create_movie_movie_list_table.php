@@ -15,10 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('movie_list_associations', function (Blueprint $table) {
+        Schema::create('movie_movie_list', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(MovieList::class);
             $table->foreignIdFor(Movie::class);
+            $table->foreignIdFor(MovieList::class);
             $table->date("watched_at")->nullable();
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movie_list_associations');
+        Schema::dropIfExists('movie_movie_list');
     }
 };

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\MovieList;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define("add-to-list", function (User $user, MovieList $movieList) {
+            return $movieList->user_id === $user->id;
+        });
+
     }
 }

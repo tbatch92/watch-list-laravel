@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddMovieToListRequest;
 use App\Http\Requests\CreateMovieListRequest;
+use App\Models\Movie;
 use App\Models\MovieList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -35,5 +37,15 @@ class MovieListController extends Controller
         $list->save();
 
         return redirect()->back()->with("message", "List successfully created.");
+    }
+
+    public function addMovieToList(AddMovieToListRequest $request, MovieList $movieList)
+    {
+        $movie = Movie::firstOrNew(["movie_db_id" => $request->movie_db_id]);
+        $movie->save();
+
+        $movieList->movies()->attach($movie);
+
+        return $movieList;
     }
 }

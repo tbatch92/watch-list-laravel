@@ -11,9 +11,13 @@ class Movie extends Model
 {
     use HasFactory;
 
-    function movieListAssociation()
+    protected $fillable = [
+        'movie_db_id'
+    ];
+
+    function movieLists()
     {
-        return $this->hasMany(MovieListAssociation::class);
+        return $this->belongsToMany(MovieList::class)->withTimestamps();
     }
 
     static function getMovieDbDetailsForId($movieDbId)

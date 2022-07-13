@@ -10,14 +10,9 @@ class MovieList extends Model
 {
     use HasFactory;
 
-    function movieListAssociation()
-    {
-        return $this->hasMany(MovieListAssociation::class);
-    }
-
     function movies()
     {
-        return $this->hasManyThrough(Movie::class, MovieListAssociation::class);
+        return $this->belongsToMany(Movie::class)->withTimestamps();
     }
 
     function user()
@@ -43,4 +38,5 @@ class MovieList extends Model
 
         return $slug;
     }
+
 }

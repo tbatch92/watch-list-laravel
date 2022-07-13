@@ -2,8 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Models\Movie;
 use App\Models\MovieList;
 use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -39,5 +41,33 @@ class ListTest extends TestCase
 
         $this->assertCount(1, MovieList::whereSlug("test-name")->get());
         $this->assertCount(1, MovieList::whereSlug("test-name-1")->get());
+    }
+
+    public function test_user_can_add_movie_to_list()
+    {
+        $list = MovieList::factory()->create();
+
+        $this->actingAs($list->user)
+            ->postJson(route("add-movie-to-list", ["movieList" => $list->id]), ["movie_db_id" => "1726"])
+            ->assertStatus(200);
+            
+        $list->refresh();
+
+        $this->assertTrue(Movie::whereMovieDbId("1726")->exists());
+        $this->assertCount(1, $list->movies);
+    }
+
+    public function test_user_cant_add_to_others_list()
+    {
+        $list = MovieList::factory()->create();
+        $otherUser = User::factory()->create();
+
+        $this->actingAs($otherUser)
+            ->postJson(route("add-movie-to-list", ["movieList" => $list->id]), ["movie_db_id" => "1726"])
+            ->assertStatus(403);
+
+        $list->refresh();
+
+        $this->assertCount(0, $list->movies);
     }
 }
