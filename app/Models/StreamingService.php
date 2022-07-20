@@ -15,6 +15,11 @@ class StreamingService extends Model
         return $this->belongsToMany(Movie::class)->withTimestamps();
     }
 
+    function scopeVisibleInApp($query)
+    {
+        $query->whereIn("movie_db_id", config("streaming.services_to_show"));
+    }
+
     static function getAllStreamingServicesFromMovieDB()
     {
         $response = Http::get("https://api.themoviedb.org/3/watch/providers/movie?api_key=" . config("moviedbapi.key"));
@@ -32,5 +37,5 @@ class StreamingService extends Model
         }
 
         return $services;
-    } 
+    }
 }

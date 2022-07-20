@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\MovieListController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,7 @@ Route::middleware("auth")->group(function() {
     Route::get("/", [MovieListController::class, "getListsPage"])->name("home");
     Route::post("/list", [MovieListController::class, "createMovieList"])->name("create-list");
     Route::get("/list/{slug}", [MovieListController::class, "getListPage"])->name("list");
+
+    Route::get("/settings", [UserController::class, "getUserSettingsPage"])->name("settings");
+    Route::put("/settings", [UserController::class, "updateUserSettings"])->name("update-settings");
 });

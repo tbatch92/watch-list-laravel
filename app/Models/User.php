@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(MovieList::class);
     }
+
+    public function streamingServices()
+    {
+        return $this->belongsToMany(StreamingService::class)->withTimestamps();
+    }
 }
