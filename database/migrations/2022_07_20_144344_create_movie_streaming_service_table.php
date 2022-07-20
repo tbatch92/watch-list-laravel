@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Movie;
+use App\Models\StreamingService;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create('movie_streaming_service', function (Blueprint $table) {
             $table->id();
-            $table->string("movie_db_id")->unique();
-            $table->string("name");
-            $table->integer("runtime")->nullable();
-            $table->string("image_url")->nullable();
-            $table->date("release_date");
-            $table->json("providers")->nullable();
+            $table->foreignIdFor(Movie::class);
+            $table->foreignIdFor(StreamingService::class);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('movie_streaming_service');
     }
 };

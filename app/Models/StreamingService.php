@@ -10,6 +10,10 @@ class StreamingService extends Model
 {
     use HasFactory;
 
+    function movies()
+    {
+        return $this->belongsToMany(Movie::class)->withTimestamps();
+    }
 
     static function getAllStreamingServicesFromMovieDB()
     {
